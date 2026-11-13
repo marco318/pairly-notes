@@ -1,0 +1,192 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>:root{color-scheme:light;box-sizing:border-box}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.pg-back{display:block;max-width:920px;margin:0 auto 20px;font:600 14px/1.4 system-ui,sans-serif;color:inherit;opacity:.7;text-decoration:none}.pg-back:hover{opacity:1;text-decoration:underline}</style></head><body>
+<title>Pairly 11/12 회의 결과</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: one column. Decisions lead in the stitched denim panel; schedule, screen changes and open items follow as quiet rows. */
+:root {
+  --bg: #F3F5F9; --surface: #FFFFFF; --fg: #171A26; --muted: #5A6176; --line: #D8DCE6;
+  --denim: #2B4686; --denim-fg: #F4F6FC; --stitch: #C98A1B;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-label: "Space Grotesk", "IBM Plex Sans KR", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11131B; --surface: #1A1D29; --fg: #E8EAF2; --muted: #9BA2B6; --line: #2C3143;
+    --denim: #223A72; --denim-fg: #EEF1FA; --stitch: #E2AB4E; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11131B; --surface: #1A1D29; --fg: #E8EAF2; --muted: #9BA2B6; --line: #2C3143;
+  --denim: #223A72; --denim-fg: #EEF1FA; --stitch: #E2AB4E; color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+}
+main { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
+.label { font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-size: 30px; line-height: 1.3; font-weight: 700; margin: 6px 0 0; text-wrap: balance; }
+h2 { font-size: 20px; line-height: 1.4; font-weight: 700; margin: 0 0 4px; text-wrap: balance; }
+p { margin: 0; }
+.sub { color: var(--muted); font-size: 15px; max-width: 68ch; }
+header, section { display: flex; flex-direction: column; gap: 12px; }
+
+.panel { background: var(--denim); color: var(--denim-fg); border-radius: 6px; padding: 8px; }
+.panel-inner { border: 2px dashed var(--stitch); border-radius: 3px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.panel .label { color: var(--stitch); }
+.panel h2 { color: var(--denim-fg); }
+.decisions { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; }
+.decisions dt { font-size: 12.5px; font-weight: 600; color: var(--stitch); }
+.decisions dd { margin: 2px 0 0; font-size: 15.5px; line-height: 1.6; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.steps .when { font-family: var(--font-label); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--stitch); font-weight: 700; }
+.steps b { font-size: 16px; }
+.steps span { font-size: 14.5px; color: var(--muted); }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14.5px; line-height: 1.55; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-label); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.scr { font-weight: 600; white-space: nowrap; }
+.en { color: var(--muted); }
+
+.rows { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 8fr); gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.row .k { font-weight: 600; }
+ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+ol.todo { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+.links { display: flex; flex-direction: column; gap: 8px; }
+.links a { color: var(--denim); font-weight: 600; text-underline-offset: 3px; }
+.links span { color: var(--muted); font-size: 14.5px; font-weight: 400; }
+a:focus-visible { outline: 2px solid var(--stitch); outline-offset: 2px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .links a { color: var(--stitch); } }
+:root[data-theme="dark"] .links a { color: var(--stitch); }
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 620px) {
+  h1 { font-size: 25px; }
+  .decisions, .steps { grid-template-columns: minmax(0, 1fr); }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+</style>
+
+<main>
+<a class="pg-back" href="./">← Pairly 자료 목록</a>
+
+  <header>
+    <p class="label">BoothHacks 2026 · 둘째 날 팀 회의 · 11/12</p>
+    <h1>가진 옷 한 벌에서 시작하는 코디, 그리고 사람의 의견</h1>
+    <p class="sub">오늘 회의에서 정리된 내용입니다. 타깃에서 성별을 빼고, 메인 기능을 매칭과 소셜 두 개로 좁혔으며, 데모는 API 없이 정해진 결과로 만들기로 했습니다.</p>
+  </header>
+
+  <div class="panel">
+    <div class="panel-inner">
+      <p class="label">Decisions</p>
+      <h2>정해진 것</h2>
+      <dl class="decisions">
+        <div><dt>문제</dt><dd>가진 옷과 어울리는 새 옷을 찾고 싶은데, 원하는 걸 말로 표현하지 못해 검색이 실패한다.</dd></div>
+        <div><dt>페르소나</dt><dd>Jun, 27세. 변화가 필요해진 계기가 있는 사람. 성별은 두지 않고 앱에서도 묻지 않는다.</dd></div>
+        <div><dt>메인 기능</dt><dd>두 개. 사진을 올리면 어울리는 착장을 골라 주는 매칭, 그리고 다른 사용자의 의견을 받는 소셜.</dd></div>
+        <div><dt>온보딩</dt><dd>카드를 한 장씩 스와이프. 결과는 스타일 이름과 스케일 바, "You look great in …" 한 줄.</dd></div>
+        <div><dt>차별점</dt><dd>비슷한 옷이 아니라 같이 입을 옷. 그중에서도 한 단계 밀어 주는 One step up.</dd></div>
+        <div><dt>범위 밖</dt><dd>비슷한 상품 찾기는 지금 넣지 않는다. 확장 가능하다고만 적는다.</dd></div>
+        <div><dt>수익</dt><dd>제휴 링크 수수료로 시작. 유저는 무료. 이후 AI 매칭 횟수 제한(예: 주 3회)과 구독.</dd></div>
+        <div><dt>데모</dt><dd>API 없이 모든 경우에 정해진 결과. 결과 이미지는 얼굴 없는 마네킹으로 해 본다.</dd></div>
+        <div><dt>피치덱</dt><dd>YC 스타일로 단순하게. 제품 이해를 맞춘 뒤 마지막에 만든다.</dd></div>
+        <div><dt>작업 방식</dt><dd>Lovable이 느려서 코드를 GitHub로 가져와 로컬에서 고치고, 확인되면 Lovable에 반영한다.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <section>
+    <h2>일정</h2>
+    <ol class="steps">
+      <li><span class="when">오늘 회의 중</span><b>제품 이해 맞추기</b><span>다섯 명이 같은 그림을 보도록.</span></li>
+      <li><span class="when">오늘 저녁</span><b>MVP와 기본 자료</b><span>앱은 8시쯤, 수정은 10~11시까지.</span></li>
+      <li><span class="when">금 11/13 아침</span><b>최종 덱</b><span>제출 마감 13:45, Hack Fair 14:00.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <div>
+      <h2>화면별로 바꿀 것</h2>
+      <p class="sub">수정된 Pairly 빌드를 같이 보면서 나온 피드백입니다. 아직 빌드에 반영되지 않았습니다.</p>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>화면</th><th>바꿀 것</th></tr></thead>
+        <tbody>
+          <tr><td class="scr">Upload</td><td>사진을 올린 뒤에는 "Snap one piece you already own" 문구를 지운다.</td></tr>
+          <tr><td class="scr">Upload</td><td>아이템 이름과 태그(Navy, Wool, Tailored)를 지운다. 내부 데이터라 보여 줄 필요가 없다.</td></tr>
+          <tr><td class="scr">Upload</td><td>"What's the occasion?"으로 묻고 칩은 유지한다.</td></tr>
+          <tr><td class="scr">Upload</td><td>"What items would you like to be matched with?"를 추가한다. 복수 선택.</td></tr>
+          <tr><td class="scr">Upload</td><td>"Anything else?"를 "Describe the vibe you're going for"로. 예시는 "Gallery owner in Paris at a formal dinner".</td></tr>
+          <tr><td class="scr">Results</td><td>제목 "3 ways to wear it"을 바꾼다. 매칭 아이템을 추천한다는 느낌으로.</td></tr>
+          <tr><td class="scr">Results</td><td>Safe / One step up / Bold는 "도전하고 싶은 정도를 고르세요" 같은 안내로 보여 준다.</td></tr>
+          <tr><td class="scr">Results</td><td>착장 이미지는 마네킹에 내 옷과 추천 아이템을 입힌 모습으로.</td></tr>
+          <tr><td class="scr">Results</td><td>Get feedback 버튼을 지운다. AI가 추천한 착장을 그대로 올려 의견을 받는 건 어색하다.</td></tr>
+          <tr><td class="scr">Social</td><td>"This week's trends"와 "Top rated this week"를 지우고, 그 자리에 Your post를 둔다.</td></tr>
+          <tr><td class="scr">Social</td><td>Rate the fit 아래에 댓글 기능을 넣는다.</td></tr>
+          <tr><td class="scr">Social</td><td>의견은 + 버튼으로 내 착장 사진을 직접 올려서 받는다. 샘플 사진은 데모용으로 둔다.</td></tr>
+          <tr><td class="scr">Saved</td><td>"Find matches" 버튼을 지우고 더미 아이템 몇 개를 넣는다.</td></tr>
+          <tr><td class="scr">Saved</td><td>아이템뿐 아니라 착장 전체도 저장한다. 내가 올린 옷도 자동으로 저장해 다시 찍지 않게 한다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>할 일</h2>
+    <ol class="todo">
+      <li>위 화면별 변경을 Pairly에 반영하기 (GitHub 연결 뒤 로컬에서).</li>
+      <li>퀴즈 결과 16가지에 맞는 룩 사진 구하기. 4개쯤은 사람이 고르고 나머지는 AI로 생성.</li>
+      <li>팀원 한 명의 유형을 골라 그 유형 하나는 끝까지 제대로 만들기.</li>
+      <li>상품 20개 정도를 골라 쇼핑 링크 걸기.</li>
+      <li>피치덱에 들어갈 자료 모으기: 왜 시장의 문제인지, 스타일을 고를 때 어떤 요소를 보는지.</li>
+      <li>남성 사용자 인터뷰로 근거 모으기. 아직 사용자 근거가 없다.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>아직 정하지 않은 것</h2>
+    <div class="rows">
+      <div class="row"><p class="k">역할</p><p>MVP 1~2명, 피치덱, 자료조사를 누가 맡을지. 덱은 한 사람이 리드하자는 의견이 있었다.</p></div>
+      <div class="row"><p class="k">제품 이름</p><p>Pairly가 "나쁘지 않다"는 반응. 확정은 아니다.</p></div>
+      <div class="row"><p class="k">퀴즈 카드 수</p><p>12장 유지 또는 유형당 1장씩 16장. 유형 이름 12개도 초안 상태다.</p></div>
+      <div class="row"><p class="k">구현 범위</p><p>16유형을 모두 채울지, 몇 개만 구현하고 나머지는 덱에서 설명할지.</p></div>
+      <div class="row"><p class="k">피드백 기능</p><p>나온 아이디어: 응원과 비평 중 고르기, AI가 악의적인 댓글 거르기, AI가 댓글을 모아 원하는 말투로 요약하기.</p></div>
+      <div class="row"><p class="k">입력 방식</p><p>텍스트와 음성 중 무엇으로 받을지. 지금 빌드는 텍스트다.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>이번 회의에서 바뀐 점</h2>
+    <ul>
+      <li>타깃: 20~30대 남성 → 성별 없음. 질문을 받으면 "팀 안에서도 서로 너무 달랐다. 이렇게 시작하고 트랙션이 생기는 쪽으로 간다"고 답한다.</li>
+      <li>소셜: 11/11에는 뺐지만 오늘 다시 넣었다. AI 추천만으로는 불안하다는 점을 사람의 의견이 채운다.</li>
+      <li>온보딩: 둘 중 하나 고르기 → 카드 스와이프. 결과는 4글자 코드 대신 이름과 스케일.</li>
+      <li>추천 결과: 아이템 하나 → 착장 전체. 옷 하나만 보면 전체 모습이 그려지지 않는다.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>관련 자료</h2>
+    <div class="links">
+      <a href="persona.html">StyleType Persona <span>· 페르소나 Jun과 해결할 문제</span></a>
+      <a href="quiz-results.html">Pairly Quiz Results Map <span>· 퀴즈 결과 16가지와 사진 브리프</span></a>
+      <a href="daydream-onboarding.html">Daydream 온보딩 화면 기획서 <span>· 화이트보드, 11/12 변경 메모</span></a>
+      <a href="https://lovable.dev/projects/36302fa5-854e-5768-860f-2abb26bec298">Pairly Lovable 프로젝트</a>
+    </div>
+  </section>
+
+  <footer>출처: 11/12 팀 회의 전사 네 부분. 발언자 이름은 옮기지 않았습니다. 회의 주제와 무관한 대화는 뺐습니다.</footer>
+</main>
+
+</body></html>

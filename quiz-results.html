@@ -1,0 +1,228 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>:root{color-scheme:light;box-sizing:border-box}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.pg-back{display:block;max-width:920px;margin:0 auto 20px;font:600 14px/1.4 system-ui,sans-serif;color:inherit;opacity:.7;text-decoration:none}.pg-back:hover{opacity:1;text-decoration:underline}</style></head><body>
+<title>Pairly Quiz Results Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: one column. Action items sit in the stitched denim panel on top; reference tables follow in quiet rows. */
+:root {
+  --bg: #F3F5F9;
+  --surface: #FFFFFF;
+  --fg: #171A26;
+  --muted: #5A6176;
+  --line: #D8DCE6;
+  --denim: #2B4686;
+  --denim-fg: #F4F6FC;
+  --stitch: #C98A1B;
+  --chip: #E7EBF5;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-label: "Space Grotesk", "IBM Plex Sans KR", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11131B; --surface: #1A1D29; --fg: #E8EAF2; --muted: #9BA2B6; --line: #2C3143;
+    --denim: #223A72; --denim-fg: #EEF1FA; --stitch: #E2AB4E; --chip: #262B3B; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11131B; --surface: #1A1D29; --fg: #E8EAF2; --muted: #9BA2B6; --line: #2C3143;
+  --denim: #223A72; --denim-fg: #EEF1FA; --stitch: #E2AB4E; --chip: #262B3B; color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+}
+main { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
+.label { font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-size: 30px; line-height: 1.3; font-weight: 700; margin: 6px 0 0; text-wrap: balance; }
+h2 { font-size: 20px; line-height: 1.4; font-weight: 700; margin: 0 0 4px; text-wrap: balance; }
+p { margin: 0; }
+.sub { color: var(--muted); font-size: 15px; max-width: 68ch; }
+header, section { display: flex; flex-direction: column; gap: 12px; }
+
+.panel { background: var(--denim); color: var(--denim-fg); border-radius: 6px; padding: 8px; }
+.panel-inner { border: 2px dashed var(--stitch); border-radius: 3px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.panel .label { color: var(--stitch); }
+.panel h2 { color: var(--denim-fg); }
+.todo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; counter-reset: t; }
+.todo li { counter-increment: t; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.todo li::before { content: counter(t); font-family: var(--font-label); font-weight: 700; color: var(--stitch); font-variant-numeric: tabular-nums; }
+.todo strong { font-weight: 700; }
+.todo span { display: block; font-size: 14.5px; opacity: .88; }
+.deadline { font-size: 14.5px; border-top: 1px solid color-mix(in srgb, var(--denim-fg) 25%, transparent); padding-top: 12px; }
+
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; }
+.fact b { display: block; font-family: var(--font-label); font-size: 26px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.fact span { font-size: 14.5px; color: var(--muted); }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; line-height: 1.55; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-label); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.code { font-family: var(--font-label); font-weight: 700; letter-spacing: .08em; white-space: nowrap; }
+td.name { font-weight: 600; white-space: nowrap; }
+.draft { font-family: var(--font-label); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
+.set { font-family: var(--font-label); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--stitch); border: 1px solid var(--stitch); border-radius: 99px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
+.tags { color: var(--muted); }
+.en { color: var(--muted); font-size: 13.5px; }
+.miss { color: var(--stitch); font-weight: 600; }
+.t16 { min-width: 760px; }
+.t12 { min-width: 420px; }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.card h3 { margin: 0; font-size: 17px; }
+.card .pick { font-family: var(--font-label); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--stitch); }
+ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 620px) {
+  h1 { font-size: 25px; }
+  .facts, .two { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+
+<main>
+<a class="pg-back" href="./">← Pairly 자료 목록</a>
+
+  <header>
+    <p class="label">BoothHacks 2026 · Pairly · 11/12 코드 기준</p>
+    <h1>온보딩 퀴즈가 낼 수 있는 결과는 16가지</h1>
+    <p class="sub">퀴즈와 결과는 API 없이 정해진 규칙으로 돌아갑니다. 아래 16가지에 맞는 사진만 준비하면 모든 경우가 채워집니다.</p>
+  </header>
+
+  <div class="panel">
+    <div class="panel-inner">
+      <p class="label">Action items</p>
+      <h2>해야 할 일</h2>
+      <ol class="todo">
+        <li><div><strong>퀴즈 카드를 12장으로 둘지 16장으로 늘릴지 정하기</strong><span>16장이면 유형당 1장이라 사진 16장이 퀴즈와 결과에 함께 쓰입니다. 아래 "카드 수" 참고.</span></div></li>
+        <li><div><strong>초안 상태인 유형 이름 12개 확정하기</strong><span>확정된 이름은 Quiet Classic, Easy Minimal, Workwear, Ivy 4개뿐입니다.</span></div></li>
+        <li><div><strong>룩 사진 16장 구하기</strong><span>아래 표의 "사진 브리프"대로. 일반인 느낌, 옷이 잘 보이는 세로 사진. 유명인과 브랜드 로고는 제외.</span></div></li>
+        <li><div><strong>카탈로그 상품 사진 불일치 고치기</strong><span>예: "Grey flannel trousers"에 정장 상의 사진이 나옵니다. 결과 화면의 아이템 타일과 풀착장 보드가 이 사진을 씁니다.</span></div></li>
+        <li><div><strong>사진과 확정한 이름을 Pairly에 반영하기</strong><span>Lovable에 프롬프트로 넣거나, GitHub 연결 뒤 코드에서 직접 교체.</span></div></li>
+        <li><div><strong>데모 주소(?demo=1)로 처음부터 끝까지 한 번 돌려 보기</strong><span>실제 손가락 스와이프, 직접 찍은 사진 업로드, Get feedback 포스팅은 아직 확인 전입니다.</span></div></li>
+      </ol>
+      <p class="deadline">제출 마감: 금 11/13 13:45 (Hack Fair 직전)</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>경우의 수</h2>
+    <div class="facts">
+      <div class="fact"><b>4,096</b><span>스와이프 입력 조합 (카드 12장 × Yes/No)</span></div>
+      <div class="fact"><b>16</b><span>결과 유형 (4축 × 2글자)</span></div>
+      <div class="fact"><b>1</b><span>퀴즈를 건너뛴 경우: Quiet Classic으로 시작</span></div>
+    </div>
+    <p class="sub">규칙: 축마다 Yes한 카드의 글자를 세어 많은 쪽으로 정합니다. 동점이거나 Yes가 없으면 기본값은 T, N, P, F입니다. 탐색 성향(exploreLevel)은 결과 화면을 바꾸지 않고 추천 카드의 순서만 바꿉니다.</p>
+  </section>
+
+  <section>
+    <h2>4축</h2>
+    <div class="scroll">
+      <table class="t12">
+        <thead><tr><th>축</th><th>글자</th><th>사진에서 보이는 것</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Fit</td><td>T Tailored / R Relaxed</td><td>몸에 맞는 실루엣 / 넉넉한 실루엣</td></tr>
+          <tr><td class="name">Color</td><td>N Neutral / C Color</td><td>네이비·그레이·베이지·흑백 / 눈에 띄는 색 하나 이상</td></tr>
+          <tr><td class="name">Detail</td><td>P Plain / D Detail</td><td>무지, 매끈한 원단 / 패턴이나 질감 (트위드, 코듀로이, 니트 조직)</td></tr>
+          <tr><td class="name">Mood</td><td>F Formal / S Street</td><td>셔츠·재킷·구두 / 티·후디·스니커즈</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <h2>결과 16가지와 사진 브리프</h2>
+      <p class="sub">이름과 태그는 코드에 있는 그대로입니다. 사진 브리프와 한 줄 문구는 축에 맞춰 쓴 제안입니다. "덱에 없음"은 지금 퀴즈 카드 12장에 그 유형을 대표하는 카드가 없다는 뜻입니다.</p>
+    </div>
+    <div class="scroll">
+      <table class="t16">
+        <thead><tr><th>코드</th><th>이름</th><th>사진 브리프</th><th>You look great in …</th><th>태그</th></tr></thead>
+        <tbody>
+          <tr><td class="code">TNPF</td><td class="name">Quiet Classic<span class="set">확정</span></td><td>네이비 무지 재킷 + 흰 셔츠 + 그레이 슬랙스, 구두</td><td class="en">a navy blazer and grey trousers</td><td class="tags">Sharp, Understated, Timeless</td></tr>
+          <tr><td class="code">TNPS</td><td class="name">City Minimal<span class="draft">초안</span></td><td>검정 슬림 팬츠 + 무지 흰 티 + 흰 스니커즈 <span class="miss">· 덱에 없음</span></td><td class="en">a plain tee and slim black trousers</td><td class="tags">Clean, Urban, Effortless</td></tr>
+          <tr><td class="code">TNDF</td><td class="name">Ivy<span class="set">확정</span></td><td>트위드 재킷 + 옥스퍼드 셔츠 + 치노, 로퍼</td><td class="en">chinos and a cable-knit sweater</td><td class="tags">Textured, Collegiate, Polished</td></tr>
+          <tr><td class="code">TNDS</td><td class="name">Modern Utility<span class="draft">초안</span></td><td>포켓 달린 필드 재킷 + 테이퍼드 카고 + 부츠 <span class="miss">· 덱에 없음</span></td><td class="en">a field jacket and tapered cargo pants</td><td class="tags">Functional, Structured, Muted</td></tr>
+          <tr><td class="code">TCPF</td><td class="name">Bright Tailor<span class="draft">초안</span></td><td>단색 컬러 재킷(버건디, 그린) + 무지 셔츠 + 슬랙스</td><td class="en">a solid-color blazer and tailored trousers</td><td class="tags">Confident, Crisp, Colorful</td></tr>
+          <tr><td class="code">TCPS</td><td class="name">Clean Pop<span class="draft">초안</span></td><td>핏한 기본 차림에 원색 니트 하나, 스니커즈 <span class="miss">· 덱에 없음</span></td><td class="en">a bright knit and slim jeans</td><td class="tags">Fresh, Playful, Neat</td></tr>
+          <tr><td class="code">TCDF</td><td class="name">Dapper<span class="draft">초안</span></td><td>체크나 스트라이프 수트 + 컬러 타이</td><td class="en">a checked suit and a patterned tie</td><td class="tags">Expressive, Refined, Patterned</td></tr>
+          <tr><td class="code">TCDS</td><td class="name">Street Tailor<span class="draft">초안</span></td><td>컬러·질감 있는 핏한 재킷 + 티 + 스니커즈 <span class="miss">· 덱에 없음</span></td><td class="en">a textured blazer and sneakers</td><td class="tags">Bold, Sharp, Mixed</td></tr>
+          <tr><td class="code">RNPF</td><td class="name">Soft Formal<span class="draft">초안</span></td><td>넉넉한 무지 코트 + 와이드 슬랙스, 뉴트럴 톤</td><td class="en">an unstructured blazer and wide trousers</td><td class="tags">Soft, Calm, Grown-up</td></tr>
+          <tr><td class="code">RNPS</td><td class="name">Easy Minimal<span class="set">확정</span></td><td>오버사이즈 무지 티 + 와이드 팬츠, 흑백·베이지</td><td class="en">a boxy tee and wide-leg trousers</td><td class="tags">Relaxed, Simple, Neutral</td></tr>
+          <tr><td class="code">RNDF</td><td class="name">Gentle Heritage<span class="draft">초안</span></td><td>코듀로이 재킷 + 울 니트 + 넉넉한 울 팬츠, 브라운 톤 <span class="miss">· 덱에 없음</span></td><td class="en">a corduroy jacket and wool trousers</td><td class="tags">Warm, Textured, Classic</td></tr>
+          <tr><td class="code">RNDS</td><td class="name">Workwear<span class="set">확정</span></td><td>초어 재킷 + 워크 팬츠 + 부츠, 흙색</td><td class="en">a chore jacket and straight denim</td><td class="tags">Rugged, Earthy, Practical</td></tr>
+          <tr><td class="code">RCPF</td><td class="name">Relaxed Color<span class="draft">초안</span></td><td>넉넉한 단색 컬러 셔츠 + 슬랙스, 로퍼 <span class="miss">· 덱에 없음</span></td><td class="en">a camp-collar shirt and pleated trousers</td><td class="tags">Warm, Open, Bright</td></tr>
+          <tr><td class="code">RCPS</td><td class="name">Weekend Pop<span class="draft">초안</span></td><td>컬러 후디 + 루즈 진 + 스니커즈</td><td class="en">a bright hoodie and loose jeans</td><td class="tags">Fun, Easy, Colorful</td></tr>
+          <tr><td class="code">RCDF</td><td class="name">Artful<span class="draft">초안</span></td><td>프린트 셔츠 + 루즈한 재킷, 색과 패턴이 겹침</td><td class="en">a printed shirt and a relaxed blazer</td><td class="tags">Creative, Layered, Rich</td></tr>
+          <tr><td class="code">RCDS</td><td class="name">Street Mix<span class="draft">초안</span></td><td>그래픽·패턴 레이어링, 오버사이즈 아우터, 스니커즈</td><td class="en">a graphic layer and wide cargo pants</td><td class="tags">Loud, Layered, Street</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Ivy의 한 줄 문구만 지금 빌드에 나오는 문구이고, 나머지 15개는 제안입니다.</p>
+  </section>
+
+  <section>
+    <div>
+      <h2>지금 퀴즈 카드 12장</h2>
+      <p class="sub">코드에 적힌 순서와 태그입니다.</p>
+    </div>
+    <div class="scroll">
+      <table class="t12">
+        <thead><tr><th>#</th><th>태그</th><th>유형</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="code">TNPF</td><td>Quiet Classic</td><td></td></tr>
+          <tr><td>2</td><td class="code">RNPS</td><td>Easy Minimal</td><td></td></tr>
+          <tr><td>3</td><td class="code">TNDF</td><td>Ivy</td><td></td></tr>
+          <tr><td>4</td><td class="code">RCDS</td><td>Street Mix</td><td></td></tr>
+          <tr><td>5</td><td class="code">TCPF</td><td>Bright Tailor</td><td></td></tr>
+          <tr><td>6</td><td class="code">RNDS</td><td>Workwear</td><td></td></tr>
+          <tr><td>7</td><td class="code">TNPF</td><td>Quiet Classic</td><td class="miss">중복</td></tr>
+          <tr><td>8</td><td class="code">RCPS</td><td>Weekend Pop</td><td></td></tr>
+          <tr><td>9</td><td class="code">RNPF</td><td>Soft Formal</td><td></td></tr>
+          <tr><td>10</td><td class="code">TCDF</td><td>Dapper</td><td></td></tr>
+          <tr><td>11</td><td class="code">RCPS</td><td>Weekend Pop</td><td class="miss">중복</td></tr>
+          <tr><td>12</td><td class="code">RCDF</td><td>Artful</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li>축별 분포: Fit T5 / R7 · Color N6 / C6 · Detail P7 / D5 · Mood F7 / S5.</li>
+      <li>대표 카드가 없는 유형 6개: City Minimal, Modern Utility, Clean Pop, Street Tailor, Gentle Heritage, Relaxed Color.</li>
+      <li>사진이 10여 장뿐이고, 같은 사진을 퀴즈와 결과에 돌려 씁니다.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>카드 수: 두 가지 안</h2>
+    <div class="two">
+      <div class="card">
+        <span class="pick">제안</span>
+        <h3>16장, 유형당 1장</h3>
+        <p>룩 사진 16장이 퀴즈 카드이자 각 유형의 대표 사진이 됩니다. 모든 축이 8 대 8로 균형이 맞습니다. 회의에서 말한 스와이프 10~20개 범위 안입니다.</p>
+      </div>
+      <div class="card">
+        <span class="pick" style="color:var(--muted)">대안</span>
+        <h3>12장 유지</h3>
+        <p>16장 중 City Minimal, Dapper, Gentle Heritage, Weekend Pop 4장을 빼면 축마다 6 대 6이 됩니다. 빠진 4개 유형은 결과용 사진만 따로 필요합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>필요한 사진</h2>
+    <ul>
+      <li><strong>룩 사진 16장.</strong> 일반인 느낌, 얼굴보다 옷이 잘 보이는 전신이나 상반신, 세로 비율.</li>
+      <li><strong>아이템 타일.</strong> 결과 화면의 "Pieces people like you wear"에 유형당 4개. 카탈로그 40개의 사진을 재사용하면 새로 구할 필요는 없습니다.</li>
+    </ul>
+  </section>
+
+  <footer>출처: Pairly 코드의 styleTypes.ts와 diagnosis.ts (11/12 확인). 결과 화면의 한 줄 문구와 아이템 4개가 코드 어디서 만들어지는지는 확인하지 않았습니다.</footer>
+</main>
+
+</body></html>
